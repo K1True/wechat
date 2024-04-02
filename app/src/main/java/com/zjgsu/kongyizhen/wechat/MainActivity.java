@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             personList.add(user9);
             Person user10 = new Person("Group5", R.drawable.img_10, "11.00","whuhuhwuhwu");
             personList.add(user10);
-            //随便注释一下。
+            //随便注释一下。呃呃
         }
     }
 }
