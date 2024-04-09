@@ -1,8 +1,12 @@
 package com.zjgsu.kongyizhen.wechat;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,15 +21,31 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initFruits();
+        init();
         RecyclerView recyclerView = findViewById(R.id.personlist);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         PersonAdapter adapter = new PersonAdapter(personList);
         recyclerView.setAdapter(adapter);
     }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // 这里可以加载横屏Fragment或者更新UI
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // 当前是横屏
+            Fragment fragment = new leftFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.fragmentContainerView,fragment);
+            fragmentTransaction.commit();
+            setContentView(R.layout.activity_main);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            // 当前是竖屏
+        }
+    }
 
-    private void initFruits() {
+    private void init() {
         for (int i = 0; i < 1; i++) {
             Person user1 = new Person("Group1", R.drawable.img_1,"16:00","hello");
             personList.add(user1);
